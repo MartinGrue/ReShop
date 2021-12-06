@@ -1,0 +1,11 @@
+#Csharp
+bin
+obj
+#VScode
+.vscode
+.vs
+# node
+node_modules
+.next
+# development in docker container
+**/.devcontainer

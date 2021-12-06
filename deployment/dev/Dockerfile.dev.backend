@@ -1,0 +1,19 @@
+FROM mcr.microsoft.com/dotnet/sdk:5.0
+ENV ASPNETCORE_ENVIRONMENT=development
+ENV DOTNET_ENVIRONMENT=development
+
+#install debugger for NET Core
+RUN apt-get update
+RUN apt-get install -y unzip
+RUN curl -sSL https://aka.ms/getvsdbgsh | /bin/sh /dev/stdin -v latest -l ~/vsdbg
+
+WORKDIR /app
+# Copy csproj and restore as distinct layers
+COPY backend.sln ./
+
+COPY API ./API
+
+RUN dotnet restore
+WORKDIR /app/API
+
+ENTRYPOINT ["dotnet", "watch", "run", "environment=development"]
