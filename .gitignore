@@ -2,7 +2,6 @@
 bin
 obj
 #VScode
-.vscode
 .vs
 # node
 node_modules
