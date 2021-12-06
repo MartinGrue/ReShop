@@ -3,6 +3,19 @@ networks:
   reshop:
 
 services:
+  frontendapp:
+    build:
+      context: ./../../client
+      dockerfile: ./../deployment/dev/Dockerfile.dev.frontend    
+    volumes:
+      - ./../../client:/app
+    networks:
+      - reshop
+    ports:
+      - "3000:3000"
+    stdin_open: true # docker run -i
+    tty: true # docker run -t
+
   backendapp:
     environment:
       - ASPNETCORE_ENVIRONMENT=development
