@@ -7,13 +7,20 @@ RUN apt-get update
 RUN apt-get install -y unzip
 RUN curl -sSL https://aka.ms/getvsdbgsh | /bin/sh /dev/stdin -v latest -l ~/vsdbg
 
+#install dotnet-ef to make migrations
+RUN dotnet tool install --global dotnet-ef --version 5.0
+ENV PATH $PATH:/root/.dotnet/tools
 WORKDIR /app
 # Copy csproj and restore as distinct layers
 COPY backend.sln ./
 
 COPY API ./API
+COPY Application ./Application
+COPY Domain ./Domain
+COPY Persistence ./Persistence
+
 
 RUN dotnet restore
 WORKDIR /app/API
 
-ENTRYPOINT ["dotnet", "watch", "run", "environment=development"]
+# ENTRYPOINT ["dotnet", "watch", "run", "environment=development"]

@@ -1,0 +1,17 @@
+**/.git
+**/.devcontainer
+**/.github
+**/.vs
+**/.vscode
+**/.github
+
+**/client-app
+
+**/API
+**/Application
+**/Domain
+**/Infrastructure
+**/Persistence
+
+**/docker-compose*
+**/Dockerfile*

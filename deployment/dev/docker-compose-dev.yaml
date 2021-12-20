@@ -6,7 +6,7 @@ services:
   frontendapp:
     build:
       context: ./../../client
-      dockerfile: ./../deployment/dev/Dockerfile.dev.frontend    
+      dockerfile: ./../deployment/dev/Dockerfile.dev.frontend
     volumes:
       - ./../../client:/app
     networks:
@@ -34,3 +34,17 @@ services:
       - "5000:5000"
     stdin_open: true # docker run -i
     tty: true # docker run -t
+
+  reshopdb:
+    image: mysql
+    container_name: reshopdb
+    networks:
+      - reshop
+    ports:
+      - "3306:3306"
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    volumes:
+      - ./../database_setup.sql:/docker-entrypoint-initdb.d/database_setup.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: example
