@@ -12,12 +12,13 @@ RUN dotnet tool install --global dotnet-ef --version 5.0
 ENV PATH $PATH:/root/.dotnet/tools
 WORKDIR /app
 # Copy csproj and restore as distinct layers
-COPY backend.sln ./
+COPY backend/backend.sln ./
 
-COPY API ./API
-COPY Application ./Application
-COPY Domain ./Domain
-COPY Persistence ./Persistence
+COPY backend/API ./API
+COPY backend/Application ./Application
+COPY backend/Domain ./Domain
+COPY backend/Persistence ./Persistence
+COPY data ./data
 
 
 RUN dotnet restore

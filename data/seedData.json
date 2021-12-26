@@ -1,0 +1,28 @@
+{
+  "products": [
+    {
+      "name": "Hammer",
+      "description": "bla",
+      "price": 1,
+      "qunatityInStock": 0
+    },
+    {
+      "name": "Hammer2",
+      "description": "bla1232132131123",
+      "price": 1,
+      "qunatityInStock": 0
+    },
+    {
+      "name": "Hammer3",
+      "description": "123",
+      "price": 1,
+      "qunatityInStock": 0
+    },
+    {
+      "name": "Hammer4",
+      "description": "123",
+      "price": 1,
+      "qunatityInStock": 0
+    }
+  ]
+}

@@ -22,10 +22,12 @@ services:
       - DOTNET_ENVIRONMENT=development
     container_name: backend
     build:
-      context: ./../../backend
-      dockerfile: ../deployment/dev/Dockerfile.dev.backend
+      context: ./../..
+      dockerfile: ./deployment/dev/Dockerfile.dev.backend
+    # entrypoint: "dotnet watch run environment=development"
     volumes:
       - ./../../backend:/app
+      - ./../../data:/app/data/
       - /app/API/bin/
       - /app/API/obj/
     networks:

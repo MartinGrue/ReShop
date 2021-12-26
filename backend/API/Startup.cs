@@ -5,13 +5,17 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence;
-
+using Application;
 using System;
 
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-
+using AutoMapper;
+using System.Reflection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 namespace API
 {
     public class Startup
@@ -26,6 +30,9 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // services.AddApplication();
+                        services.AddAutoMapper(typeof(MappingProfile));
+
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<DataContext>(opt =>
             {
@@ -38,6 +45,8 @@ namespace API
                         errorNumbersToAdd: null);
                     });
             });
+            services.AddAutoMapper(typeof(ProductJSON).Assembly);
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

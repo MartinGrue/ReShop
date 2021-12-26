@@ -1,0 +1,85 @@
+{
+  "products": [
+    {
+      "slug": "fjällräven-bergtagen-38-M-L-unisex-tourenrucksack",
+      "name": "Fjällräven BERGTAGEN 38 M-L Unisex - Tourenrucksack",
+      "price": 269.95,
+      "images": [
+        "311581002_a_bergtagen_38_ml_fjaellraeven_1.jpg",
+        "311581002_c_bergtagen_38_ml_fjaellraeven_1.jpg",
+        "311581002_d_bergtagen_38_ml_fjaellraeven_1.jpg",
+        "311581002_e_bergtagen_38_ml_fjaellraeven_1.jpg"
+      ],
+      "badges": "new",
+      "rating": 4,
+      "reviews": [
+        {
+          "author": "Samantha Smith",
+          "rating": 4,
+          "date": "27.05.2001",
+          "text": "Phasellus id mattis nulla. Mauris velit nisi, imperdiet vitae sodales in, maximus ut lectus. Vivamus commodo scelerisque lacus, at porttitor dui iaculis id. Curabitur imperdiet ultrices fermentum."
+        },
+        {
+          "author": "Adam Taylor",
+          "rating": 4,
+          "date": "27.05.2001",
+          "text": "Phasellus id mattis nulla. Mauris velit nisi, imperdiet vitae sodales in, maximus ut lectus. Vivamus commodo scelerisque lacus, at porttitor dui iaculis id. Curabitur imperdiet ultrices fermentum."
+        },
+        {
+          "author": "Helena Garcia",
+          "rating": 4,
+          "date": "27.05.2001",
+          "text": "Phasellus id mattis nulla. Mauris velit nisi, imperdiet vitae sodales in, maximus ut lectus. Vivamus commodo scelerisque lacus, at porttitor dui iaculis id. Curabitur imperdiet ultrices fermentum."
+        }
+      ],
+      "qunatityInStock": 1,
+      "brand": "Fjällräven",
+      "categories": ["rucksack"],
+      "maininfo": {
+        "header": "Der Techniker",
+        "text": "Der Bergtagen 30 ist der kleine Bruder des Bergtagen 38. Er ist speziell auf technische Kurztrips in die Berge ausgelegt und mit allem ausgestattet, was einen zuverlässigen Tourenrucksack ausmacht.Auf den Bergtagen 30 kannst du dich verlassen. Egal, ob du auf Skitour gehst oder Wände besteigst. Von der Seilfixierung über den A-Skifix bis hin zu den Eisaxthalterungen hat er alle essenziellen Ausrüstungsmerkmale für eine technische Tour dabei. Der Bauchgurt lässt sich bei Bedarf abnehmen, sodass der Bergtagen auch in Kombination mit einem Klettergurt gut sitzt. Die Kompressionsgurte sind ebenfalls abnehmbar und mit schnell zu öffnenden Metallhaken versehen."
+      },
+      "suninfo": {
+        "header": "Schneeabweisend und robust",
+        "text": "Gefertigt ist der Bergtagen 30 aus wasserdichtem Bergshell-Material. Das äußerst strapazierfähige Material besteht aus recyceltem Nylon, welches besonders flach und reißfest verwebt wurde. Da die Nähte nicht getapet sind, ist der Rucksack zwar stark wasserabweisend, aber nicht komplett wasserdicht. Perfekt für den ganzjährigen Einsatz bei wechselnden Witterungsbedingungen und beim Bergsport."
+      },
+      "details": [
+        "Klares Design",
+        "Wasserfestes Bergshell-Außenmaterial",
+        "Schneeabweisendes, vorgeformtes Rückenpolster",
+        "Abnehmbarer Bauchgurt",
+        "Brustgurt mit Signalpfeife",
+        "Abnehmbarer Deckel mit RV-Fach",
+        "Hauptfach mit Schneefang",
+        "RV-Fach und Schlüsselclip innen im Hauptfach",
+        "Abnehmbarer Kompressionsriemen oben zum Befestigen eines Seils",
+        "Stahlhaken mit reflektiver Griffzone",
+        "Alle Tankas, Haken und RV auch mit Handschuhen gut nutzbar",
+        "Befestigungspunkte für Eisäxte oder Trekkingstöcke",
+        "Seitliche Kompressionsriemen unter denen Skier in A-Line befestigt werden können",
+        "Vorbereitet für Trinksysteme",
+        "Daisychains auf der Front",
+        "Gepolsterter Boden"
+      ],
+      "attributes": [
+        { "slug": "color", "values": "red" },
+        { "slug": "size", "values": "ONESIZE" },
+        { "slug": "Gewicht", "values": "1.600 g" },
+        { "slug": "Beladungsempfehlung bis", "values": "15 kg" },
+        { "slug": "Rückenlänge", "values": "mittel/lang (< 63,5 cm)" },
+        { "slug": "Material", "values": "100% Polyamid (400D Bergshell)" },
+        { "slug": "Volumen", "values": "38 l" },
+        { "slug": "Breite", "values": "29 cm" },
+        { "slug": "Höhe", "values": "56 cm" },
+        { "slug": "Tiefe", "values": "18 cm", "featured": true },
+        { "slug": "Geschlecht", "values": "Unisex" },
+        { "slug": "Produktfamilie", "values": "Bergtagen" },
+        { "slug": "Eine grünere Wahl", "values": "ja" },
+        {
+          "slug": "Umweltinfo",
+          "values": "Recycelt, Fluorcarbon-freie Imprägnierung"
+        }
+      ]
+    }
+  ]
+}
