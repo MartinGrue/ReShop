@@ -4,14 +4,14 @@ namespace Domain
 {
     public class Product
     {
-        public Guid id { get; set; }
+        public Guid id { get; set; } = Guid.NewGuid();
         public string name { get; set; }
         public string description { get; set; }
         public long price { get; set; }
         public string? brand { get; set; }
         public int qunatityInStock { get; set; }
-        
-        
+
+
         // //features
         // public string? slug { get; set; }
         // public virtual ICollection<Image> images { get; set; }

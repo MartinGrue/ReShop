@@ -2,16 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Application;
 using AutoMapper;
 using Domain;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace API
 {
+
     public class JSONData
     {
         public List<ProductJSON> products { get; set; }
@@ -20,13 +23,14 @@ namespace API
     public class SeedData
     {
         public List<Product> products { get; set; }
+
     }
     public static class SmallSeed
     {
         public static string workingDirectory = Environment.CurrentDirectory;
         public static string projectDirectory = Directory.GetParent(workingDirectory).FullName;
-        public static SeedData? newdata;
-        public static SeedData? database;
+        public static SeedData? newJsonData;
+        public static SeedData? oldJsonData;
         private static void Serialize(string filename, IMapper mapper, DataContext context)
         {
             string datapath = Path.Combine(projectDirectory, @"data/", filename);
@@ -46,10 +50,8 @@ namespace API
         {
             if (File.Exists(datapath))
             {
-                Console.WriteLine("found" + datapath);
                 string jsonString = File.ReadAllText(datapath);
                 return JsonSerializer.Deserialize<SeedData>(jsonString);
-                // Console.WriteLine("target" + target.products[1].name);
             }
             return null;
         }
@@ -61,21 +63,23 @@ namespace API
 
             return (saveContext > 0);
         }
+        public static T GetPropertyValue<T>(object obj, string propName)
+        {
+            return (T)obj.GetType().GetProperty(propName).GetValue(obj, null);
+        }
         public static async Task<bool> ReSeedData(DataContext context, IMapper mapper)
         {
             await PurgeDb(context);
 
             string seedFile = Path.Combine(projectDirectory, @"data/", "seedData.json");
-            newdata = Deserialize(seedFile);
+            newJsonData = Deserialize(seedFile);
 
             string databaseFile = Path.Combine(projectDirectory, @"data/", "Database.json");
-            database = Deserialize(databaseFile);
+            oldJsonData = Deserialize(databaseFile);
 
 
-            await SeedProducts(context);
-
+            await Seed<Product>(context, mapper);
             var success = await context.SaveChangesAsync();
-
             Serialize("Database.json", mapper, context);
 
             return success > 0;
@@ -88,6 +92,67 @@ namespace API
                 await func(value);
             }
         }
+        public static void CheckIfNew<T>(T item, List<T> buffer, List<T> jsondata)
+        {
+            if (typeof(T) == typeof(Product))
+            {
+                Product product = (Product)(object)item;
+                List<Product> oldproducts = (List<Product>)(object)jsondata;
+                if (oldJsonData != null && !oldproducts.Exists((oldproduct) => oldproduct.name == product.name))
+                    buffer.Add(item);
+            }
+        }
+        public static void CheckIfRemoved<T>(T item, List<T> buffer, List<T> jsondata)
+        {
+            if (typeof(T) == typeof(Product))
+            {
+                Product product = (Product)(object)item;
+                List<Product> newproducts = (List<Product>)(object)jsondata;
+                if (newJsonData != null && newproducts.Exists((newproduct) => newproduct.name == product.name))
+                    buffer.Add(item);
+            }
+        }
+
+        public static List<T> Create<T>(DataContext context, IMapper mapper)
+        {
+
+            var buffer = new List<T>();
+            var newdatabuffer = new List<T>();
+            var olddatabuffer = new List<T>();
+
+            foreach (PropertyInfo propertyInfo in typeof(SeedData).GetProperties())
+            {
+                if (propertyInfo.PropertyType == typeof(List<T>))
+                {
+                    newdatabuffer = (List<T>)propertyInfo.GetValue(newJsonData);
+                }
+            }
+
+            foreach (PropertyInfo propertyInfo in typeof(JSONData).GetProperties())
+            {
+                if (propertyInfo.PropertyType == typeof(List<T>))
+                {
+                    olddatabuffer = (List<T>)propertyInfo.GetValue(oldJsonData);
+                }
+            }
+
+
+            if (newJsonData != null && newdatabuffer.Any())
+                newdatabuffer.ForEach((item) =>
+                {
+                    if (oldJsonData == null)
+                        buffer.Add(item);
+                    CheckIfNew(item, buffer, olddatabuffer);
+                });
+
+
+            if (oldJsonData != null && olddatabuffer.Any())
+                olddatabuffer.ForEach((item) => CheckIfRemoved(item, buffer, olddatabuffer));
+
+
+            return buffer;
+
+        }
 
         // public static async Task SeedFollowerFollowings(DataContext context,
         //     UserManager<AppUser> userManager, IPhotoAccessor photoAccessor)
@@ -97,47 +162,24 @@ namespace API
         //      FollowerFollowings.Add(new FollowerFollowings { UserAId = ff.UserAId, UserBId = ff.UserBId }));
         //     await context.FollowerFollowings.AddRangeAsync(FollowerFollowings);
         // }
-        public static void CreateProduct(Product product, List<Product> products)
+        // public static void CreateProduct(Product product, List<Product> products)
+        // {
+        //     product.id = product.id == Guid.Empty ? Guid.NewGuid() : product.id;
+
+        //     products.Add(new Product
+        //     {
+        //         id = product.id,
+        //         name = product.name,
+        //         description = product.description,
+        //         price = product.price,
+        //         qunatityInStock = product.qunatityInStock,
+        //     });
+        // }
+        static async Task Seed<T>(DataContext context, IMapper mapper) where T : class
         {
-            product.id = product.id == Guid.Empty ? Guid.NewGuid() : product.id;
-
-            products.Add(new Product
-            {
-                id = product.id,
-                name = product.name,
-                description = product.description,
-                price = product.price,
-                qunatityInStock = product.qunatityInStock,
-            });
-        }
-        public static async Task SeedProducts(DataContext context)
-        {
-            var products = new List<Product>();
- 
-            if (newdata != null && newdata.products.Any())
-            {
-                newdata.products.ForEach((newproduct) =>
-                {
-                    if(database == null){
-                     CreateProduct(newproduct, products);
-                    }
-                    if (database != null && !database.products.Exists((oldproduct) => oldproduct.name == newproduct.name))
-                        CreateProduct(newproduct, products);
-                });
-            }
-
-
-            if (database != null && database.products.Any())
-            {
-                database.products.ForEach((product) => 
-                {
-                    if(newdata.products.Exists((newproduct) => newproduct.name == product.name))
-                    CreateProduct(product, products);
-                });
-            }
-
-
-            await context.Products.AddRangeAsync(products);
+            var buffer = Create<T>(context, mapper);
+            DbSet<T> Set = context.Set<T>();
+            await Set.AddRangeAsync(buffer);
         }
     }
 }
