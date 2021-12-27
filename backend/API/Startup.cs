@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence;
 using Application;
+using Application.Interfaces;
 using System;
 
 using Microsoft.Extensions.Hosting;
@@ -31,7 +32,6 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplication();
-            // services.AddAutoMapper(typeof(MappingProfile));
 
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<DataContext>(opt =>
@@ -45,7 +45,8 @@ namespace API
                         errorNumbersToAdd: null);
                     });
             });
-            services.AddAutoMapper(typeof(ProductJSON).Assembly);
+            services.AddScoped<IApplicationDbContext>(provider => provider.GetService<DataContext>());
+            // services.AddAutoMapper(typeof(ProductJSON).Assembly);
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

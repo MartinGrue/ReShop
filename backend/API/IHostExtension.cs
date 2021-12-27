@@ -3,8 +3,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
+using MediatR;
 using API;
 using Persistence;
+using Application.Seed;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExtensionMethods
@@ -31,7 +33,8 @@ namespace ExtensionMethods
                 try
                 {
                     var mapper = services.GetRequiredService<IMapper>();
-                    SmallSeed.ReSeedData(context, mapper).Wait();
+                    var mediator = services.GetRequiredService<IMediator>();
+                    mediator.Send(new SeedCommand()).Wait();
                 }
                 catch (Exception ex)
                 {

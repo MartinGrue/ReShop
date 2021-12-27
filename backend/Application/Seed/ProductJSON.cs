@@ -1,9 +1,9 @@
 using System;
-
 using Application;
-using Domain;
+using Domain.Entities;
+using System.Collections.Generic;
 
-namespace Application
+namespace Application.Seed
 {
     public class ProductJSON : IMapFrom<Product>
     {
