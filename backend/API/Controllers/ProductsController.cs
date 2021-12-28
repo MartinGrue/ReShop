@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Application.Products.Queries;
+using Application.Common.Utils;
 
 namespace API.Controllers
 {
@@ -12,8 +13,13 @@ namespace API.Controllers
         [HttpGet("{slug}")]
         public async Task<ActionResult<ProductDTO>> getProductBySlug(string slug)
         {
-            Console.WriteLine("Slug: " + slug);
             return await Mediator.Send(new getProductBySlugQuery { slug = slug });
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<PaginatedList<ProductDTO>>> getProducts([FromQuery] getProductsListQuery productParams)
+        {
+            return await Mediator.Send(productParams);
         }
     }
 }
