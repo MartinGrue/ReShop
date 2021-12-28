@@ -13,22 +13,17 @@ namespace API.Controllers
     public class SeedController : BaseController
     {
         private readonly IWebHostEnvironment _hostEnvironment;
-
+        public SeedController(IWebHostEnvironment HostEnvironment)
+        {
+            _hostEnvironment = HostEnvironment;
+        }
 
         [HttpGet("reseed")]
         public async Task<ActionResult<Unit>> Reseed()
         {
-            var command = new SeedCommand();
-            return await Mediator.Send(command);
-            // return Ok();
-            // if (_hostEnvironment.IsDevelopment())
-            // {
-            //     // if (await SmallSeed.ReSeedData(_context, _mapper))
-            //     //     return Ok();
-
-            //     // return BadRequest("Failed to reseed database");
-            // }
-            // return NotFound();
+            if (_hostEnvironment.IsDevelopment())
+                return await Mediator.Send(new SeedCommand());
+            return NotFound();
         }
     }
 }

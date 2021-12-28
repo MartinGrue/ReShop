@@ -14,7 +14,7 @@ namespace Application.Interfaces
 
         // DbSet<TodoItem> TodoItems { get; set; }
 
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
         DbSet<T> Set<T>() where T : class;
     }
 }

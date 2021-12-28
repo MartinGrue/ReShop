@@ -18,11 +18,12 @@ namespace Application.Seed
     {
         public static string workingDirectory = Environment.CurrentDirectory;
         public static string projectDirectory = Directory.GetParent(workingDirectory).FullName;
+        public static string dataDirectory = Directory.GetParent(projectDirectory).FullName;
         public static SeedData? newJsonData;
         public static SeedData? oldJsonData;
         public static void Serialize(string filename, IMapper mapper, IApplicationDbContext context)
         {
-            string datapath = Path.Combine(projectDirectory, @"data/", filename);
+            string datapath = Path.Combine(dataDirectory, @"data/", filename);
             var productsToWrite = new List<ProductJSON>();
 
             foreach (var product in context.Products)
@@ -125,27 +126,36 @@ namespace Application.Seed
 
             return buffer;
         }
-        public static async Task SeedEntity<T>(IApplicationDbContext context, IMapper mapper) where T : class
+        public static async Task SeedEntity<T>(IApplicationDbContext context, IMapper mapper, CancellationToken cancellationToken) where T : class
         {
             var buffer = Create<T>(mapper);
             DbSet<T> Set = context.Set<T>();
+
             await Set.AddRangeAsync(buffer);
+            // await context.SaveChangesAsync();
+
+
         }
         public static async Task<bool> ReSeedData(IApplicationDbContext context, IMapper mapper, CancellationToken cancellationToken)
         {
             await PurgeDb(context, cancellationToken);
 
-            string seedFile = Path.Combine(projectDirectory, @"data/", "seedData.json");
+            string seedFile = Path.Combine(dataDirectory, @"data/", "seedData.json");
             newJsonData = Deserialize(seedFile);
 
-            string databaseFile = Path.Combine(projectDirectory, @"data/", "Database.json");
+            string databaseFile = Path.Combine(dataDirectory, @"data/", "Database.json");
             oldJsonData = Deserialize(databaseFile);
 
 
-            await SeedEntity<Product>(context, mapper);
+            await SeedEntity<Product>(context, mapper, cancellationToken);
+            // var succes2s = await context.SaveChangesAsync(cancellationToken);
             var success = await context.SaveChangesAsync(cancellationToken);
-            Serialize("Database.json", mapper, context);
+            Console.WriteLine("sadsasadd" + success);
 
+
+            Serialize("Database.json", mapper, context);
+            var product = await context.Products.FirstOrDefaultAsync(p => p.name == "Hammer");
+            Console.WriteLine("HI: " + product.price);
             return success > 0;
         }
 
