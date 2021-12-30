@@ -92,6 +92,17 @@ namespace Application.Seed
                     type = "iiuiuiuiu"
                 });
             }
+            var reviews = new List<Review>();
+            foreach (var review in product.reviews)
+            {
+                reviews.Add(new Review
+                {
+                    id = review.id == Guid.Empty ? Guid.NewGuid() : review.id,
+                    rating = review.rating,
+                    createdAt = review.createdAt,
+                    text = review.text
+                });
+            }
             products.Add(new Product
             {
                 id = product.id,
@@ -101,7 +112,8 @@ namespace Application.Seed
                 price = product.price,
                 qunatityInStock = product.qunatityInStock,
                 badges = badges,
-                images = product.images
+                images = product.images,
+                reviews = product.reviews
             });
         }
         public static async Task SeedProducts(IApplicationDbContext context,

@@ -10,6 +10,8 @@ namespace Persistence
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<Badge> Badges { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+
 
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {

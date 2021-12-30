@@ -17,6 +17,13 @@
           "url": "https://res.cloudinary.com/dvzlb9xco/image/upload/v1632679677/Reactivities/tzybaehh4wglbmrddasl.jpg",
           "isMain": true
         }
+      ],
+      "reviews": [
+        {
+          "rating": 2,
+          "createdAt": "2021-09-24T15:48:36.392Z",
+          "text": "this is a review description"
+        }
       ]
     }
   ]
