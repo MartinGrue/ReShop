@@ -13,6 +13,9 @@ namespace Application.Interfaces
 
         DbSet<Badge> Badges { get; set; }
         DbSet<Review> Reviews { get; set; }
+        DbSet<Image> Images { get; set; }
+        DbSet<FilterAttribute> Attributes { get; set; }
+        DbSet<Product_FilterAttribute> Product_FilterAttribute { get; set; }
 
         // DbSet<TodoItem> TodoItems { get; set; }
 

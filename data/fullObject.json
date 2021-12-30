@@ -2,27 +2,8 @@
   "products": [
     {
       "rating": 4,
-      "reviews": [
-        {
-          "author": "Samantha Smith",
-          "rating": 4,
-          "date": "27.05.2001",
-          "text": "Phasellus id mattis nulla. Mauris velit nisi, imperdiet vitae sodales in, maximus ut lectus. Vivamus commodo scelerisque lacus, at porttitor dui iaculis id. Curabitur imperdiet ultrices fermentum."
-        },
-        {
-          "author": "Adam Taylor",
-          "rating": 4,
-          "date": "27.05.2001",
-          "text": "Phasellus id mattis nulla. Mauris velit nisi, imperdiet vitae sodales in, maximus ut lectus. Vivamus commodo scelerisque lacus, at porttitor dui iaculis id. Curabitur imperdiet ultrices fermentum."
-        },
-        {
-          "author": "Helena Garcia",
-          "rating": 4,
-          "date": "27.05.2001",
-          "text": "Phasellus id mattis nulla. Mauris velit nisi, imperdiet vitae sodales in, maximus ut lectus. Vivamus commodo scelerisque lacus, at porttitor dui iaculis id. Curabitur imperdiet ultrices fermentum."
-        }
-      ],
-      "qunatityInStock": 1,
+     
+      
       "brand": "Fjällräven",
       "categories": ["rucksack"],
       "maininfo": {

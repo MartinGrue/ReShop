@@ -49,7 +49,11 @@ namespace Application.Seed
         }
         public static async Task<bool> PurgeDb(IApplicationDbContext context, CancellationToken cancellationToken)
         {
+            context.Reviews.RemoveRange(context.Reviews);
             context.Badges.RemoveRange(context.Badges);
+            context.Images.RemoveRange(context.Images);
+            // context.Attributes.RemoveRange(context.Attributes);
+            // context.Product_FilterAttribute.RemoveRange(context.Product_FilterAttribute);
             context.Products.RemoveRange(context.Products);
 
             var saveContext = await context.SaveChangesAsync(cancellationToken);
@@ -103,6 +107,7 @@ namespace Application.Seed
                     text = review.text
                 });
             }
+
             products.Add(new Product
             {
                 id = product.id,

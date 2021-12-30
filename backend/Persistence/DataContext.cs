@@ -11,6 +11,9 @@ namespace Persistence
         public DbSet<Product> Products { get; set; }
         public DbSet<Badge> Badges { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<Image> Images { get; set; }
+        public DbSet<FilterAttribute> Attributes { get; set; }
+        public DbSet<Product_FilterAttribute> Product_FilterAttribute { get; set; }
 
 
         public DataContext(DbContextOptions<DataContext> options) : base(options)
@@ -20,6 +23,17 @@ namespace Persistence
         {
             base.OnModelCreating(builder);
             builder.Entity<Product>().HasIndex(b => b.name);
+
+            builder.Entity<Product_FilterAttribute>(x => x.HasKey(ua => new { ua.FilterAttributeid, ua.Productid }));
+
+            builder.Entity<Product_FilterAttribute>(x => x.HasOne(a => a.Product)
+            .WithMany(b => b.product_FilterAttribute)
+            .HasForeignKey(a => a.Productid));
+
+            builder.Entity<Product_FilterAttribute>(x => x.HasOne(a => a.FilterAttribute)
+            .WithMany(b => b.product_FilterAttribute)
+            .HasForeignKey(a => a.FilterAttributeid));
+
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

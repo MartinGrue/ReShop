@@ -18,6 +18,7 @@ namespace Domain.Entities
         public virtual List<Badge>? badges { get; set; }
         public virtual List<Image>? images { get; set; }
         public virtual List<Review>? reviews { get; set; }
+        public virtual List<Product_FilterAttribute>? product_FilterAttribute { get; set; }
 
         // //features
         // public string? slug { get; set; }

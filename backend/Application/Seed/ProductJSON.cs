@@ -16,6 +16,10 @@ namespace Application.Seed
         public string? brand { get; set; }
         public int qunatityInStock { get; set; }
         public List<Badge> badges { get; set; }
+        public List<Review> reviews { get; set; }
+        public List<Image> images { get; set; }
+        public List<FilterAttribute> attributes { get; set; }
+
 
 
     }
