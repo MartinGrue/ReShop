@@ -29,8 +29,6 @@ namespace Application.Seed
         {
             var success = await SeedHelpers.ReSeedData(_context, _mapper, cancellationToken);
 
-            var product = await _context.Products.FirstOrDefaultAsync(p => p.name == "Hammer");
-            Console.WriteLine("HI: " + product.name);
             if (success) return Unit.Value;
             throw new Exception("Problem in create handler");
         }

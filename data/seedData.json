@@ -1,28 +1,23 @@
 {
   "products": [
     {
-      "name": "Hammer",
+      "name": "Fjällräven BERGTAGEN 38 M-L Unisex - Tourenrucksack",
+      "slug": "fjällräven-bergtagen-38-M-L-unisex-tourenrucksack",
       "description": "bla",
       "price": 1,
-      "qunatityInStock": 0
-    },
-    {
-      "name": "Hammer2",
-      "description": "bla1232132131123",
-      "price": 1,
-      "qunatityInStock": 0
-    },
-    {
-      "name": "Hammer3",
-      "description": "123",
-      "price": 1,
-      "qunatityInStock": 0
-    },
-    {
-      "name": "Hammer4",
-      "description": "123",
-      "price": 1,
-      "qunatityInStock": 0
+      "qunatityInStock": 0,
+      "badges": [
+        {
+          "type": "new"
+        }
+      ],
+      "images": [
+        {
+          "id": "tzybaehh4wglbmrddasl",
+          "url": "https://res.cloudinary.com/dvzlb9xco/image/upload/v1632679677/Reactivities/tzybaehh4wglbmrddasl.jpg",
+          "isMain": true
+        }
+      ]
     }
   ]
 }

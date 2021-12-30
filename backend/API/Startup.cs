@@ -39,6 +39,7 @@ namespace API
                 opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString),
                     mySqlOptions =>
                     {
+                        
                         mySqlOptions.EnableRetryOnFailure(
                         maxRetryCount: 10,
                         maxRetryDelay: TimeSpan.FromSeconds(10),

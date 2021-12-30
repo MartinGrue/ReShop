@@ -1,16 +1,22 @@
 using System;
+using System.Collections.Generic;
 
 namespace Domain.Entities
 {
     public class Product
     {
-        public Guid id { get; set; } = Guid.NewGuid();
+        public Guid id { get; set; }
         public string name { get; set; }
+
+        public string slug { get; set; }
+
         public string description { get; set; }
         public long price { get; set; }
         public string? brand { get; set; }
         public int qunatityInStock { get; set; }
 
+        public virtual List<Badge>? badges { get; set; }
+        public virtual List<Image>? images { get; set; }
 
         // //features
         // public string? slug { get; set; }

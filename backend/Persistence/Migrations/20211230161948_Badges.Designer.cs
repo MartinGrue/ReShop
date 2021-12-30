@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20211230161948_Badges")]
+    partial class Badges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,28 +39,6 @@ namespace Persistence.Migrations
                     b.ToTable("Badges");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Image", b =>
-                {
-                    b.Property<string>("id")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<Guid?>("Productid")
-                        .HasColumnType("char(36)");
-
-                    b.Property<bool>("isMain")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("url")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("Productid");
-
-                    b.ToTable("Image");
-                });
-
             modelBuilder.Entity("Domain.Entities.Product", b =>
                 {
                     b.Property<Guid>("id")
@@ -82,10 +62,6 @@ namespace Persistence.Migrations
                     b.Property<int>("qunatityInStock")
                         .HasColumnType("int");
 
-                    b.Property<string>("slug")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.HasKey("id");
 
                     b.HasIndex("name");
@@ -100,18 +76,9 @@ namespace Persistence.Migrations
                         .HasForeignKey("Productid");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Image", b =>
-                {
-                    b.HasOne("Domain.Entities.Product", null)
-                        .WithMany("images")
-                        .HasForeignKey("Productid");
-                });
-
             modelBuilder.Entity("Domain.Entities.Product", b =>
                 {
                     b.Navigation("badges");
-
-                    b.Navigation("images");
                 });
 #pragma warning restore 612, 618
         }

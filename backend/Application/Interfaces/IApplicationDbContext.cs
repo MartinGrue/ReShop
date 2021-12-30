@@ -11,7 +11,7 @@ namespace Application.Interfaces
     {
         DbSet<Product> Products { get; set; }
 
-
+        DbSet<Badge> Badges { get; set; }
         // DbSet<TodoItem> TodoItems { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);

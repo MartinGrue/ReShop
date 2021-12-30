@@ -9,6 +9,8 @@ namespace Persistence
     public class DataContext : DbContext, IApplicationDbContext
     {
         public DbSet<Product> Products { get; set; }
+        public DbSet<Badge> Badges { get; set; }
+
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
         }
@@ -19,7 +21,7 @@ namespace Persistence
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information);
+            // optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information);
         }
     }
 

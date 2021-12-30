@@ -49,6 +49,7 @@ namespace Application.Seed
         }
         public static async Task<bool> PurgeDb(IApplicationDbContext context, CancellationToken cancellationToken)
         {
+            context.Badges.RemoveRange(context.Badges);
             context.Products.RemoveRange(context.Products);
 
             var saveContext = await context.SaveChangesAsync(cancellationToken);
@@ -67,76 +68,76 @@ namespace Application.Seed
                 await func(value);
             }
         }
-        public static void CheckIfNew<T>(T item, List<T> buffer, List<T> jsondata)
+
+
+        public static bool CheckIfNew<T>(List<T> oldData, Func<T, bool> f)
         {
-            if (typeof(T) == typeof(Product))
-            {
-                Product product = (Product)(object)item;
-                List<Product> oldproducts = (List<Product>)(object)jsondata;
-                if (oldJsonData != null && !oldproducts.Exists((oldproduct) => oldproduct.name == product.name))
-                    buffer.Add(item);
-            }
+            return !oldData.Exists((oldItem) => f(oldItem));
         }
-        public static void CheckIfRemoved<T>(T item, List<T> buffer, List<T> jsondata)
+        public static bool CheckIfRemoved<T>(List<T> newData, Func<T, bool> f)
         {
-            if (typeof(T) == typeof(Product))
-            {
-                Product product = (Product)(object)item;
-                List<Product> newproducts = (List<Product>)(object)jsondata;
-                if (newJsonData != null && newproducts.Exists((newproduct) => newproduct.name == product.name))
-                    buffer.Add(item);
-            }
+            return newData.Exists((newItem) => f(newItem));
         }
 
-        public static List<T> Create<T>(IMapper mapper)
+        public static void CreateProduct(Product product, List<Product> products)
         {
 
-            var buffer = new List<T>();
-            var newdatabuffer = new List<T>();
-            var olddatabuffer = new List<T>();
-
-            foreach (PropertyInfo propertyInfo in typeof(SeedData).GetProperties())
+            product.id = product.id == Guid.Empty ? Guid.NewGuid() : product.id;
+            var badges = new List<Badge>();
+            foreach (var badge in product.badges)
             {
-                if (propertyInfo.PropertyType == typeof(List<T>))
+                badges.Add(new Badge
                 {
-                    newdatabuffer = (List<T>)propertyInfo.GetValue(newJsonData);
-                }
+                    id = badge.id == Guid.Empty ? Guid.NewGuid() : badge.id,
+                    type = "iiuiuiuiu"
+                });
             }
-
-            foreach (PropertyInfo propertyInfo in typeof(JSONData).GetProperties())
+            products.Add(new Product
             {
-                if (propertyInfo.PropertyType == typeof(List<T>))
-                {
-                    olddatabuffer = (List<T>)propertyInfo.GetValue(oldJsonData);
-                }
-            }
+                id = product.id,
+                name = product.name,
+                slug = product.slug,
+                description = product.description,
+                price = product.price,
+                qunatityInStock = product.qunatityInStock,
+                badges = badges,
+                images = product.images
+            });
+        }
+        public static async Task SeedProducts(IApplicationDbContext context,
+         IMapper mapper,
+         CancellationToken cancellationToken)
+        {
+            Console.WriteLine("new file: " + newJsonData);
+            Console.WriteLine("old file: " + oldJsonData);
 
+            var products = new List<Product>();
 
-            if (newJsonData != null && newdatabuffer.Any())
-                newdatabuffer.ForEach((item) =>
+            if (newJsonData != null && newJsonData.products.Any())
+                newJsonData.products.ForEach((product) =>
                 {
+                    if (oldJsonData != null && CheckIfNew(
+                        oldJsonData.products, oldItem => oldItem.name == product.name))
+                        CreateProduct(product, products);
+
                     if (oldJsonData == null)
-                        buffer.Add(item);
-                    CheckIfNew(item, buffer, olddatabuffer);
+                        CreateProduct(product, products);
                 });
 
 
-            if (oldJsonData != null && olddatabuffer.Any())
-                olddatabuffer.ForEach((item) => CheckIfRemoved(item, buffer, olddatabuffer));
+            if (oldJsonData != null && oldJsonData.products.Any())
+                oldJsonData.products.ForEach((product) =>
+                {
+                    if (newJsonData != null && CheckIfRemoved(
+                        newJsonData.products, newItem => newItem.name == product.name))
+                        CreateProduct(product, products);
+                });
 
-            return buffer;
+            await context.Products.AddRangeAsync(products);
         }
-        public static async Task SeedEntity<T>(IApplicationDbContext context, IMapper mapper, CancellationToken cancellationToken) where T : class
-        {
-            var buffer = Create<T>(mapper);
-            DbSet<T> Set = context.Set<T>();
-
-            await Set.AddRangeAsync(buffer);
-            // await context.SaveChangesAsync();
-
-
-        }
-        public static async Task<bool> ReSeedData(IApplicationDbContext context, IMapper mapper, CancellationToken cancellationToken)
+        public static async Task<bool> ReSeedData(IApplicationDbContext context,
+         IMapper mapper,
+         CancellationToken cancellationToken)
         {
             await PurgeDb(context, cancellationToken);
 
@@ -146,16 +147,14 @@ namespace Application.Seed
             string databaseFile = Path.Combine(dataDirectory, @"data/", "Database.json");
             oldJsonData = Deserialize(databaseFile);
 
-
-            await SeedEntity<Product>(context, mapper, cancellationToken);
+            await SeedProducts(context, mapper, cancellationToken);
             // var succes2s = await context.SaveChangesAsync(cancellationToken);
             var success = await context.SaveChangesAsync(cancellationToken);
-            Console.WriteLine("sadsasadd" + success);
-
 
             Serialize("Database.json", mapper, context);
-            var product = await context.Products.FirstOrDefaultAsync(p => p.name == "Hammer");
-            Console.WriteLine("HI: " + product.price);
+            // var product = await context.Products.FirstOrDefaultAsync(p => p.name == "Hammer");
+            var tests = await context.Products.FirstAsync();
+            Console.WriteLine("HI: " + tests.price);
             return success > 0;
         }
 
