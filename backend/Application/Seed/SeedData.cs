@@ -7,7 +7,9 @@ namespace Application.Seed
 {
     public class SeedData
     {
-        public List<Product> products { get; set; }
-
+#nullable enable
+        public List<Product>? products { get; set; }
+        public List<Category>? categories { get; set; }
+#nullable disable
     }
 }

@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220109155034_categories")]
+    partial class categories
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,6 +29,7 @@ namespace Persistence.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("type")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("id");
@@ -43,12 +46,14 @@ namespace Persistence.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("name")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<Guid?>("parentid")
                         .HasColumnType("char(36)");
 
                     b.Property<string>("slug")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("id");
@@ -63,9 +68,11 @@ namespace Persistence.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("slug")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("value")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("id");
@@ -85,6 +92,7 @@ namespace Persistence.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("url")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("id");
@@ -104,9 +112,11 @@ namespace Persistence.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("description")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("name")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<long>("price")
@@ -116,6 +126,7 @@ namespace Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("slug")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("id");
@@ -123,21 +134,6 @@ namespace Persistence.Migrations
                     b.HasIndex("name");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Product_Category", b =>
-                {
-                    b.Property<Guid>("categoryid")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("productid")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("categoryid", "productid");
-
-                    b.HasIndex("productid");
-
-                    b.ToTable("Product_Category");
                 });
 
             modelBuilder.Entity("Domain.Entities.Product_FilterAttribute", b =>
@@ -194,25 +190,6 @@ namespace Persistence.Migrations
                         .HasForeignKey("Productid");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Product_Category", b =>
-                {
-                    b.HasOne("Domain.Entities.Category", "category")
-                        .WithMany("product_Category")
-                        .HasForeignKey("categoryid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Product", "product")
-                        .WithMany("product_Category")
-                        .HasForeignKey("productid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("category");
-
-                    b.Navigation("product");
-                });
-
             modelBuilder.Entity("Domain.Entities.Product_FilterAttribute", b =>
                 {
                     b.HasOne("Domain.Entities.FilterAttribute", "FilterAttribute")
@@ -239,11 +216,6 @@ namespace Persistence.Migrations
                         .HasForeignKey("Productid");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Category", b =>
-                {
-                    b.Navigation("product_Category");
-                });
-
             modelBuilder.Entity("Domain.Entities.FilterAttribute", b =>
                 {
                     b.Navigation("product_FilterAttribute");
@@ -254,8 +226,6 @@ namespace Persistence.Migrations
                     b.Navigation("badges");
 
                     b.Navigation("images");
-
-                    b.Navigation("product_Category");
 
                     b.Navigation("product_FilterAttribute");
 

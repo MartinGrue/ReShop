@@ -21,16 +21,15 @@ RUN useradd -m ${USER} --uid=${UID} && echo "${USER}:${PW}" | chpasswd
 USER ${UID}:${GID}
 
 # Copy csproj and restore as distinct layers
-COPY --chown=docker backend/backend.sln ./
+COPY --chown=docker backend/backend.sln /app/backend/
 
-COPY --chown=docker backend/API ./API
-COPY --chown=docker backend/Application ./Application
-COPY --chown=docker backend/Domain ./Domain
-COPY --chown=docker backend/Persistence ./Persistence
-COPY --chown=docker data ./data
+COPY --chown=docker backend/API /app/backend/API
+COPY --chown=docker backend/Application /app/backend/Application
+COPY --chown=docker backend/Domain /app/backend/Domain
+COPY --chown=docker backend/Persistence /app/backend/Persistence
+COPY --chown=docker data /app/data
 
-
+WORKDIR /app/backend/API
 RUN dotnet restore
-WORKDIR /app/API
 USER root
 # ENTRYPOINT ["dotnet", "watch", "run", "environment=development"]

@@ -19,6 +19,8 @@ namespace Domain.Entities
         public virtual List<Image>? images { get; set; }
         public virtual List<Review>? reviews { get; set; }
         public virtual List<Product_FilterAttribute>? product_FilterAttribute { get; set; }
+        public virtual List<Product_Category>? product_Category { get; set; }
+
 
         // //features
         // public string? slug { get; set; }

@@ -1,6 +1,14 @@
 {
+  "categories": [
+    {
+      "id": "b55867c7-1571-4829-b649-382f2d25c2cc",
+      "name": "rucksack",
+      "slug": "rucksack"
+    }
+  ],
   "products": [
     {
+      "id": "c3a98f7e-83ab-4b6e-b49d-b30f503b9625",
       "name": "Fjällräven BERGTAGEN 38 M-L Unisex - Tourenrucksack",
       "slug": "fjällräven-bergtagen-38-M-L-unisex-tourenrucksack",
       "description": "bla",
@@ -25,6 +33,12 @@
           "text": "this is a review description"
         }
       ]
+    }
+  ],
+  "product_Categories": [
+    {
+      "productid": "c3a98f7e-83ab-4b6e-b49d-b30f503b9625",
+      "categoryid": "b55867c7-1571-4829-b649-382f2d25c2cc"
     }
   ]
 }

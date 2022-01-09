@@ -5,6 +5,5 @@
     <RootNamespace>Domain</RootNamespace>
     <AssemblyName>Domain</AssemblyName>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
 </Project>
