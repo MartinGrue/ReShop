@@ -1,0 +1,61 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "restart",
+      "type": "process",
+      "command": "docker",
+      "args": ["restart", "backend"],
+
+      "presentation": {
+        "reveal": "silent",
+        "group": "abc"
+      }
+    },
+    {
+      "label": "sleep",
+      "type": "shell",
+      "command": "sleep 3",
+      "dependsOrder": "parallel",
+      "dependsOn": ["dotnetwatchrun"],
+
+      "presentation": {
+        "reveal": "always",
+        "group": "abc"
+      }
+    },
+    {
+      "label": "dotnetwatchrun",
+      "type": "process",
+      "command": "docker",
+      "args": ["exec", "backend", "dotnet", "watch", "run"],
+      "isBackground": true,
+      "problemMatcher": [
+        {
+          "pattern": [
+            {
+              "regexp": ".",
+              "file": 1,
+              "location": 2,
+              "message": 3
+            }
+          ],
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": ".",
+            "endsPattern": "."
+          }
+        }
+      ],
+      "dependsOrder": "sequence",
+      "dependsOn": ["restart"],
+
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    }
+  ]
+}
