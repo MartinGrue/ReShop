@@ -29,7 +29,18 @@ COPY --chown=docker backend/Domain /app/backend/Domain
 COPY --chown=docker backend/Persistence /app/backend/Persistence
 COPY --chown=docker data /app/data
 
+# RUN mkdir /app/backend/API/bin /app/backend/API/obj \
+#     /app/backend/Application/bin /app/backend/Application/obj \
+#     /app/backend/Domain/bin /app/backend/Domain/obj \
+#     /app/backend/Persistence/bin /app/backend/Persistence/obj
+
+# RUN chown -R root:root /app/backend/API/bin /app/backend/API/obj \
+#     /app/backend/Application/bin /app/backend/Application/obj \
+#     /app/backend/Domain/bin /app/backend/Domain/obj \
+#     /app/backend/Persistence/bin /app/backend/Persistence/obj
+
 WORKDIR /app/backend/API
 RUN dotnet restore
+
 USER root
 # ENTRYPOINT ["dotnet", "watch", "run", "environment=development"]

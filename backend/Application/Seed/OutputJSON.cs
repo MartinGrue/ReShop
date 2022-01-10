@@ -11,10 +11,9 @@ namespace Application.Seed
         public List<OutputJSON.Category> categories { get; set; }
         public List<OutputJSON.Product_Category> product_Categories { get; set; }
 
-        public class Product : IMapFrom<Domain.Entities.Product>
+        public class Product : BaseJSON.Product, IMapFrom<Domain.Entities.Product>
         {
             public Guid id { get; set; }
-            public string name { get; set; }
             public string slug { get; set; }
 
             public string description { get; set; }
@@ -27,10 +26,9 @@ namespace Application.Seed
             public List<FilterAttribute> attributes { get; set; }
 
         }
-        public class Category : IMapFrom<Domain.Entities.Category>
+        public class Category : BaseJSON.Category, IMapFrom<Domain.Entities.Category>
         {
             public Guid id { get; set; }
-            public string name { get; set; }
             public string slug { get; set; }
         }
 

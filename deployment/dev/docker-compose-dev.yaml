@@ -28,14 +28,6 @@ services:
     volumes:
       - ./../../backend:/app/backend
       - ./../../data:/app/data/
-      - /app/backend/API/bin/
-      - /app/backend/API/obj/
-      - /app/backend/Application/bin/
-      - /app/backend/Application/obj/
-      - /app/backend/Domain/bin/
-      - /app/backend/Domain/obj/
-      - /app/backend/Persistence/bin/
-      - /app/backend/Persistence/obj/
     networks:
       - reshop
     ports:
