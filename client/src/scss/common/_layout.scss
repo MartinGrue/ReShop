@@ -1,0 +1,22 @@
+/*
+// .layout
+*/
+@import "../variables";
+
+.layout {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.layout_header {
+  flex-shrink: 0;
+  background-color: aqua;
+}
+.layout_body {
+  flex-grow: 1;
+  background-color: aquamarine;
+}
+.layout_footer {
+  flex-shrink: 0;
+  background-color: beige;
+}

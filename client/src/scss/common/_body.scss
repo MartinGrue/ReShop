@@ -1,0 +1,15 @@
+/*
+// body
+*/
+@import '../variables';
+
+body {
+    height: 100%;
+    font-family: $body-font-family;
+    font-size: $body-font-size;
+    font-weight: $body-font-weight;
+    line-height: $body-line-height;
+    background: $body-bg;
+    color: $body-font-color;
+    overflow-y: scroll;
+}

@@ -12,32 +12,32 @@ RUN dotnet tool install --global dotnet-ef --version 5.0
 ENV PATH $PATH:/root/.dotnet/tools
 WORKDIR /app
 
-ENV USER=docker
+ENV USER=gruma
 ENV UID=1000
 ENV GID=1000
 # default password for user
-ENV PW=docker
+ENV PW=gruma
 RUN useradd -m ${USER} --uid=${UID} && echo "${USER}:${PW}" | chpasswd
 USER ${UID}:${GID}
 
 # Copy csproj and restore as distinct layers
-COPY --chown=docker backend/backend.sln /app/backend/
+COPY --chown=gruma backend/backend.sln /app/backend/
 
-COPY --chown=docker backend/API /app/backend/API
-COPY --chown=docker backend/Application /app/backend/Application
-COPY --chown=docker backend/Domain /app/backend/Domain
-COPY --chown=docker backend/Persistence /app/backend/Persistence
-COPY --chown=docker data /app/data
+COPY --chown=gruma backend/API /app/backend/API
+COPY --chown=gruma backend/Application /app/backend/Application
+COPY --chown=gruma backend/Domain /app/backend/Domain
+COPY --chown=gruma backend/Persistence /app/backend/Persistence
+COPY --chown=gruma data /app/data
 
-# RUN mkdir /app/backend/API/bin /app/backend/API/obj \
-#     /app/backend/Application/bin /app/backend/Application/obj \
-#     /app/backend/Domain/bin /app/backend/Domain/obj \
-#     /app/backend/Persistence/bin /app/backend/Persistence/obj
+RUN mkdir /app/backend/API/bin /app/backend/API/obj \
+    /app/backend/Application/bin /app/backend/Application/obj \
+    /app/backend/Domain/bin /app/backend/Domain/obj \
+    /app/backend/Persistence/bin /app/backend/Persistence/obj
 
-# RUN chown -R root:root /app/backend/API/bin /app/backend/API/obj \
-#     /app/backend/Application/bin /app/backend/Application/obj \
-#     /app/backend/Domain/bin /app/backend/Domain/obj \
-#     /app/backend/Persistence/bin /app/backend/Persistence/obj
+RUN chown -R gruma:gruma /app/backend/API/bin /app/backend/API/obj \
+    /app/backend/Application/bin /app/backend/Application/obj \
+    /app/backend/Domain/bin /app/backend/Domain/obj \
+    /app/backend/Persistence/bin /app/backend/Persistence/obj
 
 WORKDIR /app/backend/API
 RUN dotnet restore

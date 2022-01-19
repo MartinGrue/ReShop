@@ -5,16 +5,16 @@
       "name": ".NET Core Launch",
       "type": "coreclr",
       "request": "attach",
-      "preLaunchTask": "sleep",
+      "preLaunchTask": "debug",
+      // "processId": "${command:pickRemoteProcess}",
       "processName": "API",
       "env": {
         "ASPNETCORE_ENVIRONMENT": "development",
         "REMOTE_DEBUGGING": "true"
-    },
+      },
       "pipeTransport": {
         "pipeProgram": "docker",
         "pipeArgs": ["exec", "-i", "-u", "0", "backend"],
-        "":"",
         "debuggerPath": "/root/vsdbg/vsdbg",
         "pipeCwd": "${workspaceRoot}/backend",
         "quoteArgs": false
@@ -27,17 +27,16 @@
       "name": ".NET Core Docker Attach",
       "type": "coreclr",
       "request": "attach",
-      // "processId": "${command:pickRemoteProcess}",
-      "processName": "API",
+      "processId": "${command:pickRemoteProcess}",
+      // "processName": "API",
       "pipeTransport": {
         "pipeProgram": "docker",
-        "pipeArgs": ["exec", "-i", "backend"],
+        // "pipeArgs": ["exec", "-i", "backend"],
+        "pipeArgs": ["exec", "-i", "-u", "0", "backend"],
+
         "debuggerPath": "/root/vsdbg/vsdbg",
         "pipeCwd": "${workspaceRoot}/backend",
         "quoteArgs": false
-      },
-      "sourceFileMap": {
-        "/app/backend": "${workspaceRoot}/backend"
       }
     }
   ]

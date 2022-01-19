@@ -15,11 +15,33 @@
       }
     },
     {
-      "label": "sleep",
+      "label": "chwon",
       "type": "shell",
-      "command": "sleep 3",
-      "dependsOrder": "parallel",
-      "dependsOn": ["dotnetwatchrun"],
+      "command": "sudo",
+      "args": [
+        "chown",
+        "-R",
+        "gruma:gruma",
+        "${workspaceRoot}/backend/API/obj",
+        "${workspaceRoot}/backend/API/bin",
+        "${workspaceRoot}/backend/Domain/obj",
+        "${workspaceRoot}/backend/Domain/bin",
+        "${workspaceRoot}/backend/Application/obj",
+        "${workspaceRoot}/backend/Application/bin",
+        "${workspaceRoot}/backend/Persistence/obj",
+        "${workspaceRoot}/backend/Persistence/bin"
+      ],
+      "presentation": {
+        "reveal": "silent",
+        "group": "abc"
+      }
+    },
+    {
+      "label": "debug",
+      "type": "shell",
+      "command": "${workspaceRoot}/.vscode/isDllRunning.sh",
+      "dependsOrder": "sequence",
+      "dependsOn": ["restart", "dotnetwatchrun", "chwon"],
 
       "presentation": {
         "reveal": "always",
@@ -49,8 +71,8 @@
           }
         }
       ],
-      "dependsOrder": "sequence",
-      "dependsOn": ["restart"],
+      // "dependsOrder": "sequence",
+      // "dependsOn": ["restart"],
 
       "presentation": {
         "reveal": "always",

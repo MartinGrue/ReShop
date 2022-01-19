@@ -1,0 +1,42 @@
+// ----------------------------------------
+// -- colors
+// ----------------------------------------
+// light
+$light-color: #fff !default;
+$light-opposite-color: #3d464d !default;
+
+// ----------------------------------------
+// -- helpers
+// ----------------------------------------
+// Font Weight
+$font-weight-thin: 100 !default;
+$font-weight-extra-light: 200 !default;
+$font-weight-light: 300 !default;
+$font-weight-normal: 400 !default;
+$font-weight-medium: 500 !default;
+$font-weight-semi-bold: 600 !default;
+$font-weight-bold: 700 !default;
+$font-weight-extra-bold: 800 !default;
+$font-weight-black: 900 !default;
+// breakpoints
+$breakpoints: (
+  xs-start: 0px,
+  xs-end: 575px,
+  sm-start: 576px,
+  sm-end: 767px,
+  md-start: 768px,
+  md-end: 991px,
+  lg-start: 992px,
+  lg-end: 1199px,
+  xl-start: 1200px,
+);
+
+// ----------------------------------------
+// -- body
+// ----------------------------------------
+$body-bg: $light-color !default;
+$body-font-family: "Roboto", "sans-serif" !default;
+$body-font-color: $light-opposite-color !default;
+$body-font-size: 16px !default;
+$body-font-weight: $font-weight-normal !default;
+$body-line-height: 1.5 !default;
